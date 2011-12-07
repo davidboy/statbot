@@ -17,7 +17,7 @@ app.get '/', (req, res) ->
 
 port = process.env.PORT || 3000
 app.listen port, ->
-  console.log 'Started web server!'
+  console.log "Listening on #{port}"
 
 
 
