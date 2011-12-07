@@ -1,6 +1,6 @@
 #!/usr/bin/env coffee
 
-irc     = require('irc')
+#irc     = require('irc')
 express = require('express')
 
 records =
