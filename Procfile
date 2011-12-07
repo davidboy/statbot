@@ -1,1 +1,1 @@
-bot: coffee statbot.coffee
+web: coffee statbot.coffee
