@@ -1,1 +1,1 @@
-bot: node statbot.js
+bot: coffee statbot.coffee
