@@ -3,7 +3,7 @@
 irc     = require('irc')
 express = require('express')
 
-users = []
+users = {}
 
 app = express.createServer(express.logger())
 
