@@ -8,6 +8,18 @@ records =
   '#ruby': {}
   '#kittybot': {}
 
+
+
+app = express.createServer()
+
+app.get '/', (req, res) ->
+  res.send('Hello world!')
+
+app.listen process.env.PORT, ->
+  console.log 'Started web server!'
+
+
+
 client = new irc.Client 'irc.freenode.net', 'statbot'
   channels: ['#kittybot', '#ruby'] #['#elementary-web', '#ruby', '#kittybot']
 
@@ -34,12 +46,3 @@ client.addListener 'part', (channel, nick, reason, message) ->
 client.addListener 'message', (from, to, message) ->
   if message == '!printlogs'
     console.log JSON.stringify(records)
-
-
-app = express.createServer()
-
-app.get '/', (req, res) ->
-  res.send('Hello world!')
-
-app.listen process.env.PORT, ->
-  console.log 'Started web server!'
