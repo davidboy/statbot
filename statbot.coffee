@@ -16,7 +16,8 @@ app.get '/:username', (req, res) ->
 
   for timestamp, action in data.history
     res.write(timestamp + '\n')
-    res.end()
+
+  res.end()
 
 port = process.env.PORT || 3000
 app.listen port, ->
