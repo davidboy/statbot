@@ -3,47 +3,35 @@
 irc     = require('irc')
 express = require('express')
 
-records =
-  '#elementary-web': {}
-  '#ruby': {}
-  '#kittybot': {}
-
-
+users = []
 
 app = express.createServer(express.logger())
 
 app.get '/', (req, res) ->
-  res.send('Hello world!')
+  res.send(JSON.stringify(users))
 
 port = process.env.PORT || 3000
 app.listen port, ->
   console.log "Listening on #{port}"
 
 
-
 client = new irc.Client 'irc.freenode.net', 'statbot'
   channels: ['#kittybot', '#ruby'] #['#elementary-web', '#ruby', '#kittybot']
 
 client.addListener 'join', (channel, nick, message) ->
-  records[channel][nick] = [] unless records[channel][nick]
+  users[nick] = {online: false, history: {}} unless users[nick]
 
-  data =
-    action:'join'
-    date: Date.now()
-  records[channel][nick].push data
+  # Don't record them as joining if they are already online
+  unless users[nick].online
+    users[nick].online = true
+    users[nick].history[Date.now()] = 'join'
 
-  console.log "#{nick} joined #{channel}"
 
 client.addListener 'part', (channel, nick, reason, message) ->
-  records[channel][nick] = [] unless records[channel][nick]
+  users[nick] = {online: false, history: {}} unless users[nick]
 
-  data =
-    action:'part'
-    date: Date.now()
-  records[channel][nick].push data
+  # Only record them as leaving if they are online
+  if users[nick].online
+    users[nick].online = false
+    users[nick].history[Date.now()] = 'part'
 
-  console.log "#{nick} left #{channel}"
-
-client.addListener 'message', (from, to, message) ->
-  if message == '!printlogs'
-    console.log JSON.stringify(records)
