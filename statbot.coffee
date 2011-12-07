@@ -10,6 +10,14 @@ app = express.createServer(express.logger())
 app.get '/', (req, res) ->
   res.send(JSON.stringify(users))
 
+app.get '/:username', (req, res) ->
+  username = req.params.username
+  data = users[username]
+
+  for timestamp, action in data.history
+    res.write(timestamp + '\n')
+    res.end()
+
 port = process.env.PORT || 3000
 app.listen port, ->
   console.log "Listening on #{port}"
