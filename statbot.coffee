@@ -10,12 +10,13 @@ records =
 
 
 
-app = express.createServer()
+app = express.createServer(express.logger())
 
 app.get '/', (req, res) ->
   res.send('Hello world!')
 
-app.listen process.env.PORT, ->
+port = process.env.PORT || 3000
+app.listen port, ->
   console.log 'Started web server!'
 
 
