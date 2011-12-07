@@ -25,6 +25,9 @@ client.addListener 'join', (channel, nick, message) ->
   unless users[nick].online
     users[nick].online = true
     users[nick].history[Date.now()] = 'join'
+    console.log "#{nick} joined #{channel}"
+  else
+    console.log "#{nick} joined #{channel}, recording skipped because he was already online"
 
 
 client.addListener 'part', (channel, nick, reason, message) ->
@@ -34,4 +37,7 @@ client.addListener 'part', (channel, nick, reason, message) ->
   if users[nick].online
     users[nick].online = false
     users[nick].history[Date.now()] = 'part'
+    console.log "#{nick} left #{channel}"
+  else
+    console.log "#{nick} left #{channel}, recording skipped because he was already offline"
 
