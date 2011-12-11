@@ -43,4 +43,9 @@ module.exports =
       callbacks.on_finished()
 
 
-
+process.on 'SIGTERM', ->
+  console.log("Marking all users as offline")
+  module.exports.users_online (users) ->
+    for user in users
+      module.exports.user_quit user, '#foobar'
+      console.log "Marking #{user} as offline"

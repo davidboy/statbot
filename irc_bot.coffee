@@ -19,3 +19,8 @@ module.exports =
     client.addListener 'quit', (nick, reason, channel) ->
       backend.user_quit(nick, channel)
       console.log "#{nick} quit"
+
+    client.addListener 'names', (channel, nicks) ->
+      for nick, perms of nicks
+        console.log "Marking #{nick} as online"
+        backend.user_joined(nick, channel)

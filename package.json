@@ -1,9 +1,10 @@
 {
   "name": "statbot",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "dependencies": {
     "coffee-script": "latest",
     "express": "latest",
-    "irc": "latest"
+    "irc": "latest",
+    "redis": "latest"
   }
 }
