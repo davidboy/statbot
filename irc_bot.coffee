@@ -24,3 +24,12 @@ module.exports =
       for nick, perms of nicks
         console.log "Marking #{nick} as online"
         backend.user_joined(nick, channel)
+
+    process.on 'SIGTERM', ->
+      console.log("Marking all users as offline")
+      backend.users_online (users) ->
+        for user in users
+          backend.user_quit user, '#foobar'
+          console.log "Marking #{user} as offline"
+
+
