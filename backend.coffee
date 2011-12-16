@@ -4,6 +4,10 @@ client = redis.createClient()
 client.on 'error', (err) ->
   console.log err
 
+current_day = ->
+  d = new Date()
+  d.getUTCDay()
+
 module.exports =
   user_joined: (username, channel) =>
     client.sadd 'users_with_data', username
@@ -14,6 +18,12 @@ module.exports =
     client.sadd 'users_with_data', username
     client.srem 'users_online', username
     client.rpush "history:#{username}", JSON.stringify([0, parseInt(Date.now()/60000)])
+
+  record_minute: ->
+    client.incr "total_mins:#{current_day()}"
+
+  user_is_online: (username) ->
+    client.incr "#{username}:#{current_day()}"
 
   users_with_data: (callback) =>
     client.smembers 'users_with_data', (err, results) =>
