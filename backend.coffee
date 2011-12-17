@@ -4,11 +4,13 @@ client = redis.createClient()
 client.on 'error', (err) ->
   console.log err
 
-current_day = ->
+current_hour = ->
   d = new Date()
-  d.getUTCDay()
+  d.getUTCHours()
 
 module.exports =
+  client: client
+
   user_joined: (username, channel) =>
     client.sadd 'users_with_data', username
     client.sadd 'users_online', username
@@ -20,10 +22,15 @@ module.exports =
     client.rpush "history:#{username}", JSON.stringify([0, parseInt(Date.now()/60000)])
 
   record_minute: ->
-    client.incr "total_mins:#{current_day()}"
+    client.incr "total_mins:#{current_hour()}"
 
   user_is_online: (username) ->
-    client.incr "#{username}:#{current_day()}"
+    client.incr "#{username}:#{current_hour()}"
+
+  get_probability_for_user: (username, day, callback) ->
+    client.get "#{username}:#{day}", (err, user_online_mins) =>
+      client.get "total_mins:#{day}", (err, total_mins) =>
+        callback(parseInt(parseInt(user_online_mins) / parseInt(total_mins) * 100))
 
   users_with_data: (callback) =>
     client.smembers 'users_with_data', (err, results) =>
