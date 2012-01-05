@@ -24,5 +24,10 @@ app.get '/:week_id/:username/basic.txt', (req, res) ->
     on_finished: ->
       res.end()
 
+app.get '/probability/:username/:hour', (req, res) ->
+  backend.get_probability_for_user req.params.username, req.params.hour, (prob) =>
+    res.write prob.toString()
+    res.end()
+
 
 module.exports = app
