@@ -13,8 +13,15 @@ app.get '/users/online/', (req, res) ->
     res.write(user + "\n") for user in users
     res.end()
 
-app.get '/probability/:username/:hour', (req, res) ->
-  backend.get_probability_for_user req.params.username, req.params.hour, (prob) =>
+app.get '/history/:username/', (req, res) ->
+  backend.get_user_history req.params.username, (history) ->
+    for item in history
+      res.write item + "\n"
+
+    res.end()
+
+app.get '/probability/:username/:day/:hour/', (req, res) ->
+  backend.get_probability_for_user req.params.username, req.params.day, req.params.hour, (prob) =>
     res.write prob.toString()
     res.end()
 
