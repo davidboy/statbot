@@ -43,7 +43,6 @@ module.exports =
         callback(parseInt(parseInt(user_online_mins) / parseInt(total_mins) * 100))
 
   get_user_history: (username, callback) ->
-    console.log "history:#{username}"
     client.lrange "history:#{username}", 0, -1, (err, history) ->
       callback(history.reverse())
 
