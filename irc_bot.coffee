@@ -5,8 +5,8 @@ client = {}
 
 module.exports =
   start: ->
-    client = new irc.Client 'irc.freenode.net', 'statbot2'
-      channels: ['#kittybot']
+    client = new irc.Client 'irc.freenode.net', 'statbot'
+      channels: ['#kittybot', '#elementary', '#elementary-dev', '#elementary-web']
 
     client.addListener 'join', (channel, nick, message) ->
       backend.user_joined(nick, channel)
