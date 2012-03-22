@@ -1,9 +1,9 @@
-redis = require('redis').createClient()
+client = require('redis').createClient()
 
 client.on 'error', (err) ->
   console.log "Redis Error: #{err}"
 
-current = require 'helpers'
+current = require './helpers'
 
 module.exports =
   client: client

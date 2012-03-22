@@ -1,15 +1,15 @@
 module.exports =
-  day = ->
+  day: ->
     d = new Date()
     d.getUTCDay()
 
-  hour = ->
+  hour: ->
     d = new Date()
     d.getUTCHours()
 
-  minute = ->
+  minute: ->
     d = new Date()
     d.getUTCMinutes()
 
-  timestamp = ->
-    "#{current_day()} #{current_hour()}:#{current_minute()}"
+  timestamp: ->
+    "#{module.exports.day()} #{module.exports.hour()}:#{module.exports.minute()}"
