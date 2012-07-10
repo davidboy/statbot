@@ -3,8 +3,6 @@
   "version": "0.1.0",
   "dependencies": {
     "coffee-script": "latest",
-    "express": "latest",
-    "irc": "latest",
-    "redis": "latest"
+    "irc": "latest"
   }
 }
