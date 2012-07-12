@@ -1,6 +1,6 @@
 #!/usr/bin/env coffee
-irc_bot    = require('./irc_bot')
-api_server = require('./api')
+irc_bot    = require './irc_bot'
+api_server = require './api'
 
 irc_bot.start()
 

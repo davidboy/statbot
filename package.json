@@ -5,6 +5,6 @@
     "coffee-script": "latest",
     "express": "latest",
     "irc": "latest",
-    "redis": "latest"
+    "ejs": "latest"
   }
 }
