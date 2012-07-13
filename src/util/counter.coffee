@@ -16,5 +16,16 @@ module.exports =
     verify_existence_of name
     counters[name] -= 1
 
+  set: (name, value) ->
+    verify_existence_of name
+    counters[name] = value
+
+  reset: (name) ->
+    verify_existence_of name
+    counters[name] = 0
+
+  wipe: ->
+    counters = {}
+
   names: ->
     name for name, _ of counters
