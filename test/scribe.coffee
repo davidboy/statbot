@@ -9,9 +9,9 @@ describe 'the scribe module', ->
   before ->
     counter.wipe()
 
-    bot   = new events.EventEmitter()
+    bot = new events.EventEmitter()
 
-    # We're fakeing these functions so that `scribe` will have access to the 
+    # We're faking these functions so that `scribe` will have access to the 
     #   user lists without having to load the `user` module.
     bot.all_users = ->
       ['davidboy', 'khampal']
