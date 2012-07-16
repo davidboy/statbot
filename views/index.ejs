@@ -28,7 +28,7 @@
           axisxtype: " ",
           axisytype: " "
         }).hover(function () {
-          this.marker = this.marker || r.tag(this.x, this.y, this.value, 0, this.r + 2).insertBefore(this);
+          this.marker = this.marker || r.tag(this.x, this.y, this.value.toString() + " %", 0, this.r + 2).insertBefore(this);
           this.marker.show();
         }, function() {
           this.marker && this.marker.hide();
