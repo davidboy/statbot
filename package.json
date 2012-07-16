@@ -5,6 +5,10 @@
     "coffee-script": "latest",
     "express": "latest",
     "irc": "latest",
-    "ejs": "latest"
+    "ejs": "latest",
+
+    "mocha": "latest",
+    "mockery": "latest",
+    "sinon": "latest"
   }
 }
