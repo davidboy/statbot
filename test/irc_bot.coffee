@@ -52,5 +52,9 @@ describe 'the irc_bot module', ->
     assert bot.emit.calledWithExactly 'join', 'khampal'
     assert bot.emit.calledWithExactly 'join', 'davidboy'
 
+    client.emit 'nick', 'tom95', 'tom95|afk', ['#kittybot', '#elementary'], 'change!'
+    assert bot.emit.calledWithExactly 'quit', 'tom95'
+    assert bot.emit.calledWithExactly 'join', 'tom95|afk'
+
 
 # Whew.  Let's go eat some chocolate now.
