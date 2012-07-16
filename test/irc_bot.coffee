@@ -29,32 +29,35 @@ describe 'the irc_bot module', ->
     mockery.deregisterAll()
     mockery.disable()
 
-  it 'should work', ->
-    # Ensure that the irc bot is being created
-    assert client_creator.calledWithNew()
+  describe 'actual irc bot', ->
+    it 'is created', ->
+      assert client_creator.calledWithNew()
 
-    # Ensure the module is connecting to the right network
-    assert client_creator.calledWith 'irc.freenode.net'
+    it 'connects to freenode', ->
+      assert client_creator.calledWith 'irc.freenode.net'
 
-    # Now, let's fire off some events on the irc bot, and ensure the module is
-    #   propagating them correctly into statbot for other modules to use.
-
+  it 'causes statbot to emit the join event when someone joins irc', ->
     client.emit 'join', '#kittybot', 'davidboy', 'hai'
     assert bot.emit.calledWithExactly 'join', 'davidboy'
 
+  it 'causes statbot to emit the quit event when someone quits irc or leaves a channel', ->
     client.emit 'part', '#kittybot', 'davidboy', 'imad', 'bye'
     assert bot.emit.calledWithExactly 'quit', 'davidboy'
 
     client.emit 'quit', 'davidboy', 'imad', '#kittybot'
     assert bot.emit.calledWithExactly 'quit', 'davidboy'
 
+  it 'marks all irc users as online when the bot starts', ->
     client.emit 'names', '#kittybot', {'khampal': 'ops', 'davidboy': 'normal'}
     assert bot.emit.calledWithExactly 'join', 'khampal'
     assert bot.emit.calledWithExactly 'join', 'davidboy'
 
-    client.emit 'nick', 'tom95', 'tom95|afk', ['#kittybot', '#elementary'], 'change!'
-    assert bot.emit.calledWithExactly 'quit', 'tom95'
-    assert bot.emit.calledWithExactly 'join', 'tom95|afk'
+  describe 'when a user changes their nick', ->
+    beforeEach -> 
+      client.emit 'nick', 'tom95', 'tom95|afk', ['#kittybot', '#elementary'], 'change!'
 
+    it 'marks the old nick as offline', ->
+      assert bot.emit.calledWithExactly 'quit', 'tom95'
 
-# Whew.  Let's go eat some chocolate now.
+    it 'marks the new nick as online', ->
+      assert bot.emit.calledWithExactly 'join', 'tom95|afk'
