@@ -7,4 +7,7 @@ spec:
 run:
 	node_modules/coffee-script/bin/coffee src/statbot.coffee
 
-.PHONY: test spec run
+daemon:
+	node_modules/coffee-script/bin/coffee src/statbot.coffee &
+
+.PHONY: test spec run daemon
