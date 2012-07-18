@@ -12,6 +12,7 @@ module.exports = (bot) ->
       layout: false
       username: req.params.username
       data:     JSON.stringify flatten bot.find_user(req.params.username).online_probability()
+      currently_online: req.params.username in bot.online_users()
 
   port = process.env.PORT || 3000
   bot.api.listen port, ->

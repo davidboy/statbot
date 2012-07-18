@@ -41,7 +41,7 @@
       <h1>What's the best time to catch <%= username %> online?</h1>
       <div id="holder"></div>
       <p>
-          Darker dots == higher chance of being online.  Calculations are based on historical data for <%= username %>.  Past performance is no guarantee of future results.  All times are UTC.
+          <%= username %> is currently <%= currently_online ? 'online' : 'offline' %>. Darker dots == higher chance of being online.  Calculations are based on historical data for <%= username %>.  Past performance is no guarantee of future results.  All times are UTC.
       </p>
   </body>
 </html>
