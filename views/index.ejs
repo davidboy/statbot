@@ -13,7 +13,33 @@
 
     <script type="text/javascript">
       window.onload = function () {
-        var r = Raphael("holder")
+        // Calculates the offset from UTC to the current timezone.  It's
+        //   returned as a number of minutes, hince the devision by 60.
+        var tzOffset = new Date().getTimezoneOffset() / 60;
+
+        // This is an array of all valid UTC hour codes.  Used to render the
+        //   x-axis labels on the chart.
+        var hours = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 
+                     17, 18, 19, 20, 21, 22, 23].map(
+            function (hour) {
+            // We'll loop through the array of UTC times and convert them to the
+            //   local timezone using the offset obtained above.
+            var localTime = hour - tzOffset;
+
+            // This subtraction magic yields some shady numbers.  Let's convert
+            //   them to the true faith!
+            if (localTime < 0) {
+              localTime += 24;
+            } else if (localTime > 23) {
+              localTime -= 24;
+            }
+
+            // Finally, the times have to be a string for Raphael to render them.
+            return localTime.toString();
+          });
+
+        // The Raphael made me do it.  Don't ask.
+        var r = Raphael("holder");
         var dotchart = r.dotchart(10,10,620,260,
           [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
           [7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -22,7 +48,7 @@
           heat: true,
           axis: "0 0 1 1",
           axisylabels: ["Sun", "Sat", "Fri", "Thu" ,"Wed", "Tue", "Mon"],
-          axisxlabels: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "13", "15", "16", "17", "18", "19", "20", "21", "22", "23"],
+          axisxlabels: hours,
           axisxstep: 23,
           axisystep: 6,
           axisxtype: " ",
