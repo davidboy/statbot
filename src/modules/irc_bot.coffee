@@ -1,8 +1,9 @@
 irc = require 'irc'
 
-module.exports = (bot, config) ->
-  client = new irc.Client config.server, config.username,
-    channels: config.channels
+module.exports = (bot, config, client) ->
+  unless client
+    client = new irc.Client config.server, config.username,
+      channels: config.channels
   
   client.on 'join', (channel, nick, message) ->
     bot.emit 'join', nick
