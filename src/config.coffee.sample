@@ -1,0 +1,10 @@
+module.exports.statbot =
+  modules: ['irc_bot', 'ticker', 'scribe', 'users', 'prophet', 'api', 'logger', 'persistence']
+
+module.exports.irc_bot =
+  server: 'irc.freenode.net'
+  username: 'statbotz'
+  channels: ['#kittybot']#, '#elementary', '#elementary-dev', '#elementary-web']
+
+module.exports.api =
+  listen: 3001

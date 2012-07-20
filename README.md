@@ -11,7 +11,7 @@ The statbot core is nothing more than an instance of `EventEmitter`.  It periodi
 
 
 ## Modules
-The actual bot logic is organized into a bunch of modules, found in `src/modules/`  Each module has a single defined purpose.  That way, the code is nice and clean, plus it's easier to test.  Desired modules (listed in `src/statbot.coffee`) are each loaded in order, and the function it exports is called, with the bot object as an argument.  (Yes, this is _very_ similar to the scheme used by [hubot](https://github.com/github/hubot)).
+The actual bot logic is organized into a bunch of modules, found in `src/modules/`  Each module has a single defined purpose.  That way, the code is nice and clean, plus it's easier to test.  Desired modules (listed in `src/statbot.coffee`) are each loaded in order, and the function it exports is called, with the bot object and any config settings for that module as an argument.  (Yes, this is _very_ similar to the scheme used by [hubot](https://github.com/github/hubot)).
 
 ### Server adapters (choose one)
 These modules connect to a chat server, and tell statbot to emit the `join` and `quit` events whenever the corresponding action happens in a chatroom.

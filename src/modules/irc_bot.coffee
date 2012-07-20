@@ -1,8 +1,8 @@
 irc = require 'irc'
 
-module.exports = (bot) ->
-  client = new irc.Client 'irc.freenode.net', 'statbot'
-    channels: ['#kittybot', '#elementary', '#elementary-dev', '#elementary-web']
+module.exports = (bot, config) ->
+  client = new irc.Client config.server, config.username,
+    channels: config.channels
   
   client.on 'join', (channel, nick, message) ->
     bot.emit 'join', nick

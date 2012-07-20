@@ -3,6 +3,11 @@ sinon   = require 'sinon'
 mockery = require 'mockery'
 events  = require 'events'
 
+config =
+  server: 'irc.freenode.net'
+  username: 'statbot'
+  channels: ['#kittybot']
+
 describe 'the irc_bot module', ->
   bot = client = client_creator = null
 
@@ -23,7 +28,7 @@ describe 'the irc_bot module', ->
 
     sinon.spy bot, 'emit'
 
-    require('../src/modules/irc_bot')(bot)
+    require('../src/modules/irc_bot')(bot, config)
 
   after ->
     mockery.deregisterAll()
