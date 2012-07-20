@@ -15,4 +15,7 @@ run:
 daemon:
 	node_modules/coffee-script/bin/coffee src/statbot.coffee &
 
-.PHONY: test spec run daemon install
+compile:
+	node_modules/coffee-script/bin/coffee --compile --output lib/ src/
+
+.PHONY: test spec run daemon install compile
