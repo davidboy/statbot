@@ -16,7 +16,7 @@ The actual bot logic is organized into a bunch of modules, found in `src/modules
 ### Server adapters (choose one)
 These modules connect to a chat server, and tell statbot to emit the `join` and `quit` events whenever the corresponding action happens in a chatroom.
 * `irc_bot` constructs an irc bot (using [node-irc](https://github.com/martynsmith/node-irc)) which sits on an irc server in a list of specified channels.
-* `rabbitbot` hooks into elementary's RabbitBot.  Coming soon!
+* `statrabbit` hooks into elementary's RabbitBot.  If you enable this, make sure to disable `irc_bot`.
 
 ### Required modules
 * `ticker`: this module causes statbot to emit the `tick` event as described above.
@@ -29,3 +29,35 @@ These modules connect to a chat server, and tell statbot to emit the `join` and 
 * `logger` just logs user activity to the console.  Useful during debuging.
 * `persistence` writes all counters to disk on every tick, and also restores the last counter dump at bot startup.  Enable this if there's any chance whatsoever of the bot crashing.  For best results, load after `scribe`.
 * `shnatsel` implements logging all actions to datafiles in the format supported by [shnatsel's presence-log-parser](https://code.launchpad.net/~shnatsel/elementaryweb/presence-log-parser).  Coming soon!
+
+# Instalation
+## Normal install
+    git clone https://github.com/davidboy/statbot.git
+    cd statbot
+    make install
+Open up `src/config.coffee` in your favorite editor and configure to taste.  Make sure you change the irc server and nickname.
+
+All set!  To run statbot, use either `make run` or `make daemon`.
+
+## For use with RabbitBot
+    cd /path/to/rabbitbot
+    cd lib
+    git clone https://github.com/davidboy/statbot.git
+    cd statbot
+    make install
+Open up `src/config.coffee` in your favorite editor, and...
+* Change the datafile location as shown in the comments.  
+* Edit the modules array, replacing `irc_bot` with `statrabbit`.
+* Delete the irc configuration block.
+* Modify the rest of the settings to taste.
+
+Then,
+
+    make compile
+    cd ../..
+Edit RabbitBot's `app.js` file, and add the following line:
+
+    require('./lib/statbot/lib/modules/statrabbit.js').init(client, commands);
+That's all!  Just run RabbitBot as usual, and everything will Just Work.
+
+    
