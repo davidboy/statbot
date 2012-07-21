@@ -26,11 +26,11 @@ These modules connect to a chat server, and tell statbot to emit the `join` and 
 * `api` runs a web server to generate online probability graphs using `prophet`'s predictions.
 
 ### Extra modules (optional)
-* `logger` just logs user activity to the console.  Useful during debuging.
+* `logger` just logs user activity to the console.  Useful during debugging.
 * `persistence` writes all counters to disk on every tick, and also restores the last counter dump at bot startup.  Enable this if there's any chance whatsoever of the bot crashing.  For best results, load after `scribe`.
 * `shnatsel` implements logging all actions to datafiles in the format supported by [shnatsel's presence-log-parser](https://code.launchpad.net/~shnatsel/elementaryweb/presence-log-parser).  Coming soon!
 
-# Instalation
+# Installation
 ## Normal install
     git clone https://github.com/davidboy/statbot.git
     cd statbot
