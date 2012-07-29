@@ -8,4 +8,4 @@ module.exports = (bot) ->
       parseInt(user_online_mins / total_mins * 100) or 0
 
     online_probability: ->
-      @online_probability_on(day, hour) for hour in [0..23] for day in [1..7]
+      @online_probability_on(day, hour) for hour in [0..23] for day in [0..7]
