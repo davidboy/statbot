@@ -3,4 +3,4 @@ describe 'the api module', ->
   it 'allows you to access a chart for each user'
 
 describe 'davidboy', ->
-  it 'is too lazy to write tests for the api or logger modules'
+  it 'is too lazy to write tests for the api or persistence modules'
